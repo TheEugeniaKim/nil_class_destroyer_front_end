@@ -1,11 +1,9 @@
 class neerajTile{
-    constructor(image_url){
-    this.image_url = 'nill_class_destroyer_front_end/src/neeraj_tile.js'
+    constructor(){
+    this.image_url = 'https://i.imgur.com/SrvkkhV.png'
     }
         
-    static createNeerajTile() {
-        return neerajTile.new 
-    }//end of for
+
     
 
 }
