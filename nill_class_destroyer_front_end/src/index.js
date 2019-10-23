@@ -1,8 +1,12 @@
-document.addEventListener('DOMContentLoaded', function(event){
 
 
     const gameBoard = document.querySelector('.game-board')
     const shooter = document.querySelector('.shooter')
+
+    let score = 0 
+
+    const scoreShow = document.querySelector('.score')
+    scoreShow.insertAdjacentHTML('beforeend',`<h2>Score: ${score}</h2>`)
     
     function renderShooterTiles(){
         let currentNum
@@ -67,38 +71,40 @@ document.addEventListener('DOMContentLoaded', function(event){
             for(let i=1; i < 9; i++){
                 for( j=i ;j<50; j+=10){
                     // debugger
-                    if(allTiles[j].querySelector('img').src === allTiles[j-1].querySelector('img').src && allTiles[j].querySelector('img').src === allTiles[j+1].querySelector('img').src ){
+                    if(allTiles[j].querySelector('img').src === allTiles[j-1].querySelector('img').src && allTiles[j].querySelector('img').src === allTiles[j+1].querySelector('img').src && allTiles[j].querySelector('img').src !== "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"){
                         console.log('it works')
                         allTiles[j-1].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
                         allTiles[j].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
                         allTiles[j+1].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
+                        score += 3
                         // debugger
                     }//end of if
                 }//end of for j
             } // end of i
     } //end of clearTilesHorizontal
 
-    clearTilesHorizontal()
+    // clearTilesHorizontal()
 
 
     function clearTilesVertical(){
         console.log("clearing vert")
         // debugger
         let allTiles = document.querySelectorAll('.box')
-        for(i=11; i<50; i+=10){
-            for(j=i;j<(i+9); j++){
+        for(i=10; i<50; i+=10){
+            for(j=i;j<(i+10); j++){
                 // debugger
-                if(allTiles[j].querySelector('img').src === allTiles[j-10].querySelector('img').src && allTiles[j].querySelector('img').src === allTiles[j+10].querySelector('img').src ){
+                if(allTiles[j].querySelector('img').src === allTiles[j-10].querySelector('img').src && allTiles[j].querySelector('img').src === allTiles[j+10].querySelector('img').src && allTiles[j].querySelector('img').src !== "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"){
                         console.log('it works')
                         allTiles[j-10].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
                         allTiles[j].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
                         allTiles[j+10].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
+                        score += 3
                         // debugger
                 }//end of if
             }//end of for j
         }//end of for i
     } //end of clearTilesVertical
-    clearTilesVertical()
+    // clearTilesVertical()
 
     function shiftTilesUp(){
         // debugger
@@ -117,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function(event){
 
     }///end of tile shift up
 
-    shiftTilesUp()
+    // shiftTilesUp()
 
 
     ///adding shooter -- Merging Alex's code **********************************************************
@@ -187,9 +193,12 @@ document.addEventListener('DOMContentLoaded', function(event){
                     clearTilesVertical()
                     clearTilesHorizontal()
                     shiftTilesUp()
+                    clearTilesVertical()
+                    scoreShow.innerText = ""
+                    scoreShow.insertAdjacentHTML('beforeend',`<h2>Score: ${score}</h2>`)
                     slide()
                 }else{
-                    alert('YOU LOSE')
+                    gameBoard.innerHTML = "YOU LOST. You're fired. " 
                 }
 
                     // clearTilesVertical()
@@ -200,11 +209,13 @@ document.addEventListener('DOMContentLoaded', function(event){
     }//end of shoot function
     
     function listenForSpaceBar(){
-        
+    let oldTime = 0
         document.addEventListener("keydown", (event) => {
             
+            if ((event.timeStamp - oldTime) > 90 && event.code === "Space") {
+                debugger
+                oldTime = event.timeStamp
             
-        if (event.code === "Space") {
             shoot()
             clearInterval(id)
             ranCannonImage = ranTile[Math.floor(Math.random() * ranTile.length)]
@@ -215,8 +226,7 @@ document.addEventListener('DOMContentLoaded', function(event){
     
     })
     }
-    
-    listenForSpaceBar()
+     listenForSpaceBar()
 
 
 
@@ -231,7 +241,6 @@ document.addEventListener('DOMContentLoaded', function(event){
         
     })//end of gameBoard event listener
 
-})// dom content loaded
 
 
 
