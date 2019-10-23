@@ -1,121 +1,167 @@
-document.addEventListener('DOMContentLoaded', function(event){
+let ranTile = ['https://i.imgur.com/tnuhsYy.png', 'https://i.imgur.com/SrvkkhV.png', 'https://i.imgur.com/aSU28qw.png', 'https://i.imgur.com/JyxRnjJ.png']
+let currentCannonPosition = 20
+let currentCannonImage
+const gameBoard = document.querySelector('.game-board')
+const shooter = document.querySelector('.shooter')
+let ranCannonImage
 
 
-    const gameBoard = document.querySelector('.game-board')
-    const shooter = document.querySelector('.shooter')
+function shoot(){
+    if (document.getElementById(`${currentCannonPosition - 4}`).innerHTML === `<img src="https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&amp;rid=giphy.webp" class="pictures">`) {
+    console.log("EMPTY ABOVE")
+    currentCannonImage = document.getElementById(`${currentCannonPosition}`).innerHTML
+    console.log(currentCannonPosition)
+    console.log(currentCannonImage)
+    document.getElementById(`${currentCannonPosition}`).innerHTML = `<img src="https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&amp;rid=giphy.webp" class="pictures">`
+    document.getElementById(`${currentCannonPosition - 4}`).innerHTML = currentCannonImage
+    currentCannonPosition -= "4"
+    currentCannonImage = document.getElementById(`${currentCannonPosition}`).innerHTML
+    console.log(currentCannonPosition)
+    console.log(currentCannonImage)
+    setTimeout(function(){ shoot()}, 100);
 
-    let gameBoardArr = [       
-    `<div class="box">`,
-    `<div class="box">`,
-    `<div class="box">`,
-    `<div class="box">`,
-    `<div class="box">`,
-    `<div class="box">`,
-    `<div class="box">`,
-    `<div class="box">`,
-    `<div class="box">`,
-    `<div class="box">`, 
-    `<div class="box">`,
-    ]
-    
-    function renderShooterTiles(){
-        let shooterTileArray = []
-        for(i=0; i<8; i++) {
-        let randNum = Math.floor(Math.random() * 4) + 1  
-            if (randNum === 1){
-                let tile = new charlieTile()
-                 shooterTileArray.push(tile)
-                //  debugger
-            }
-            if (randNum === 2){
-                let tile = new neerajTile()
-                shooterTileArray.push(tile)
-                // debugger
-            }
-            if (randNum === 3){
-                let tile = new simonTile()
-                shooterTileArray.push(tile)
-                // debugger
-            }
-            if (randNum === 4){
-                let tile = new wilfTile()
-                shooterTileArray.push(tile)
-                // debugger
-            }
+} else {
+    // console.log(currentCannonPosition)
+    // console.log(currentCannonImage)
+
+}}
+
+
+
+function renderShooterTiles() {
+    let shooterTileArray = []
+    for (i = 0; i < 8; i++) {
+        let randNum = Math.floor(Math.random() * 4) + 1
+        if (randNum === 1) {
+            let tile = new charlieTile()
+            shooterTileArray.push(tile)
+            //  debugger
+        }
+        if (randNum === 2) {
+            let tile = new neerajTile()
+            shooterTileArray.push(tile)
             // debugger
-        }//end of for/
+        }
+        if (randNum === 3) {
+            let tile = new simonTile()
+            shooterTileArray.push(tile)
+            // debugger
+        }
+        if (randNum === 4) {
+            let tile = new wilfTile()
+            shooterTileArray.push(tile)
+            // debugger
+        }
         // debugger
-                for (j=0; j<4; j++){
-                    // let targetTile = document.querySelector('.box').dataset.tileNumber[j]
-                    gameBoard.insertAdjacentHTML('beforeend', `
-                    <div class="box"><img src=${shooterTileArray[j].image_url} class ="pictures" data-row="A" data-tileNumber=${j+1}></div>
+    }//end of for/
+    // debugger
+    for (j = 0; j < 4; j++) {
+        // let targetTile = document.querySelector('.box').dataset.tileNumber[j]
+        gameBoard.insertAdjacentHTML('beforeend', `
+                    <div id=${j + 1} class="box"><img src=${shooterTileArray[j].image_url} class ="pictures" data-row="A"></div>
                     `)
-                }//end of j for
+    }//end of j for
 
-                for (k=4; k<8; k++){
-                    // let targetTile = document.querySelector('.box').dataset.tileNumber[j]
-                    gameBoard.insertAdjacentHTML('beforeend', `
-                    <div class="box"><img src=${shooterTileArray[k].image_url} class ="pictures" data-row="B" tileNumber=${k+1}></div>
+    for (k = 4; k < 8; k++) {
+        // let targetTile = document.querySelector('.box').dataset.tileNumber[j]
+        gameBoard.insertAdjacentHTML('beforeend', `
+                    <div id=${k + 1} class="box"><img src=${shooterTileArray[k].image_url} class ="pictures" data-row="B"></div>
                     `)
-                }//end of k for
-                
-                for(l=8; l<12; l++){
-                    gameBoard.insertAdjacentHTML('beforeend', `
-                    <div class="box" data-row="C" data-tileNumber=${l+1}>
+    }//end of k for
+
+    for (l = 8; l < 12; l++) {
+        gameBoard.insertAdjacentHTML('beforeend', `
+                    <div id=${l + 1} class="box" data-row="C"><img src=https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp class ="pictures"></div>
                     `)
-                }//end of l for
-                for(m=12; m<16; m++){
-                    gameBoard.insertAdjacentHTML('beforeend', `
-                    <div class="box" data-row="D" data-tileNumber=${m+1}>
+    }//end of l for
+    for (m = 12; m < 16; m++) {
+        gameBoard.insertAdjacentHTML('beforeend', `
+                    <div id=${m + 1} class="box" data-row="C"><img src=https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp class ="pictures"></div>
                     `)
-                }//end of m for
-                
-        console.log(shooterTileArray)
-        return shooterTileArray
+    }//end of m for
+    for (n = 16; n < 20; n++) {
+        gameBoard.insertAdjacentHTML('beforeend', `
+        <div id=${n + 1} class="box" data-row="C"><img src=https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp class="pictures"></div>
+        `)
+    }//end of m for
+
+
+
+    console.log(shooterTileArray)
+    return shooterTileArray
     }//end of shooter function
-    
-    renderShooterTiles()
 
-    console.log('RENDERING SHOOTER TILES')
-
-
-    //when the page loads load the shooter tile array and render on the page
-    //then render the tiles randomly on the board in the shooting area
-    //render the canon/have it start moving back and forth 
+renderShooterTiles()
 
 
 
 
-    // function clearTiles(){
-    //     ///row A
-    //     if
-    // }
-    
-    gameBoard.addEventListener('click', function(event){
-        console.log(event)
-        // debugger
+
+//set cannon to matrix
+function emptyBox(num){
+    document.getElementById(`${num}`).innerHTML = `<img src=https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp class="pictures">`
+}
+//fill next cannon
+function fillBox(num){
+    document.getElementById(`${num}`).innerHTML = `<img src=${ranCannonImage} class="pictures">`
+}
+
+
+
+// INFINITE LOOP
+    // let intervalID = setInterval(e => {
+    //     console.log("YO")    
+    // }, 100);
+    // document.addEventListener("keydown", e => {
+    //     if (e.code === "Space") {
+    //         clearInterval(intervalID)
+    //     };
+    // });
+
+
+//move from 20 to left and right 
+
+fillBox(20)
+
+// 
+ranCannonImage = ranTile[Math.floor(Math.random() * ranTile.length)]
+
+document.addEventListener("keydown", (event) => {
+
+    if (event.code === "Space") {
+        shoot()
+        clearInterval(id)
+        ranCannonImage = ranTile[Math.floor(Math.random() * ranTile.length)]
+        fillBox(20)
         
-    })//end of gameBoard event listener
-    
-})// dom content loaded
+
+    }
+
+})
+
+let id = setInterval(slide, 150)
+let direction = 'left'
+
+function slide(){
+    emptyBox(currentCannonPosition)
+
+    if(currentCannonPosition == 20){
+        direction = 'left'
+    }
+    if (currentCannonPosition == 17){
+        direction = 'right'
+    }
+
+    if(direction === 'right'){
+        currentCannonPosition++
+    } else {
+        currentCannonPosition--
+    }
+        
+    fillBox(currentCannonPosition)
+
+}
 
 
 
-/* <div class = "game-board">
-<div class="box" data-x=1 data-y="A" id="blue"></div>
-<div class="box" data-x=2 data-y="A"></div>
-<div class="box" data-x=3 data-y="A"></div>
-<div class="box" data-x=1 data-y="B"></div>
-<div class="box" data-x=2 data-y="B"></div>
-<div class="box" data-x=3 data-y="B"></div>
-<div class="box" data-x=1 data-y="C"></div>
-<div class="box" data-x=2 data-y="C"></div>
-<div class="box" data-x=3 data-y="C"></div> 
-</div> */
 
-
-// <div class="shooter">
-// <div class="box" data-x=1 data-y="A"></div>
-// <div class="box" data-x=2 data-y="A"></div>
-// <div class="box" data-x=3 data-y="A"></div>
-// </div>
