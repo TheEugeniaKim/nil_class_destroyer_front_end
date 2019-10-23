@@ -5,56 +5,56 @@ document.addEventListener('DOMContentLoaded', function(event){
     const shooter = document.querySelector('.shooter')
     
     function renderShooterTiles(){
+        let currentNum
         let shooterTileArray = []
         for(i=0; i<60; i++) {
-        let randNum = Math.floor(Math.random() * 4) + 1  
-            if (randNum === 1){
-                let tile = new charlieTile()
-                 shooterTileArray.push(tile)
-                //  debugger
+            let randNum = Math.floor(Math.random() * 4) + 1  
+            while (randNum === currentNum){
+                randNum = Math.floor(Math.random() * 4) + 1
             }
-            if (randNum === 2){
-                let tile = new neerajTile()
-                shooterTileArray.push(tile)
+            currentNum = randNum
+
+                if (randNum === 1){
+                    let tile = new charlieTile()
+                    shooterTileArray.push(tile)
+                    //  debugger
+                }
+                if (randNum === 2){
+                    let tile = new neerajTile()
+                    shooterTileArray.push(tile)
+                    // debugger
+                }
+                if (randNum === 3){
+                    let tile = new simonTile()
+                    shooterTileArray.push(tile)
+                    // debugger
+                }
+                if (randNum === 4){
+                    let tile = new wilfTile()
+                    shooterTileArray.push(tile)
+                    // debugger
+                }
                 // debugger
-            }
-            if (randNum === 3){
-                let tile = new simonTile()
-                shooterTileArray.push(tile)
-                // debugger
-            }
-            if (randNum === 4){
-                let tile = new wilfTile()
-                shooterTileArray.push(tile)
-                // debugger
-            }
-            // debugger
         }//end of for/
         // debugger
                 for (j=0; j<10; j++){
-                    // let targetTile = document.querySelector('.box').dataset.tileNumber[j]
                     gameBoard.insertAdjacentHTML('beforeend', `
-                    <div class="box"><img src=${shooterTileArray[j].image_url} class ="pictures" data-row="A" data-tileNumber=${j+1}></div>
+                    <div id=${j+1} class="box"><img src=${shooterTileArray[j].image_url} class ="pictures" data-row="A" ></div>
                     `)
                 }//end of j for
 
                 for (k=10; k<20; k++){
                     // let targetTile = document.querySelector('.box').dataset.tileNumber[j]
                     gameBoard.insertAdjacentHTML('beforeend', `
-                    <div class="box"><img src=${shooterTileArray[k].image_url} class ="pictures" data-row="B" tileNumber=${k+1}></div>
+                    <div id=${k+1} class="box"><img src=${shooterTileArray[k].image_url} class ="pictures" data-row="B" ></div>
                     `)
                 }//end of k for
                 
                 for(l=20; l<60; l++){
                     gameBoard.insertAdjacentHTML('beforeend', `
-                    <div class="box"><img src="https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp" class ="pictures data-row="C" data-tileNumber=${l+1}>
+                    <div id=${l+1} class="box"><img src="https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp" class ="pictures data-row="C" >
                     `)
                 }//end of l for
-                // for(m=12; m<24; m++){
-                //     gameBoard.insertAdjacentHTML('beforeend', `
-                //     <div class="box"><img src="https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp" class ="pictures data-row="D" data-tileNumber=${m+1}>
-                //     `)
-                // }//end of m for
                 
         console.log(shooterTileArray)
         return shooterTileArray
@@ -63,12 +63,6 @@ document.addEventListener('DOMContentLoaded', function(event){
     renderShooterTiles()
 
     console.log('RENDERING SHOOTER TILES')
-
-
-    //when the page loads load the shooter tile array and render on the page
-    //then render the tiles randomly on the board in the shooting area
-    //render the canon/have it start moving back and forth 
-
 
 
 
@@ -87,17 +81,6 @@ document.addEventListener('DOMContentLoaded', function(event){
                     }//end of if
                 }//end of for j
             } // end of i
-
-        // for(i=2;i<60;i+=10){
-        //     // debugger
-        //    if(allTiles[i].querySelector('img').src === allTiles[i-1].querySelector('img').src && allTiles[i].querySelector('img').src === allTiles[i+1].querySelector('img').src ){
-        //         console.log('it works')
-        //         allTiles[i-1].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
-        //         allTiles[i].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
-        //         allTiles[i+1].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
-        //         // debugger
-        //    }//end of if
-        // }//end of for i
     } //end of clearTilesHorizontal
 
     clearTilesHorizontal()
@@ -117,23 +100,13 @@ document.addEventListener('DOMContentLoaded', function(event){
                 }//end of if
             }//end of for j
         }//end of for i
-
-    //     for(i=8;i<12;i++){
-    //         // debugger
-    //        if(allTiles[i].querySelector('img').src === allTiles[i-4].querySelector('img').src && allTiles[i].querySelector('img').src === allTiles[i+4].querySelector('img').src ){
-    //             console.log('it works')
-    //             allTiles[i-4].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
-    //             allTiles[i].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
-    //             allTiles[i+4].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
-    //             // debugger
-    //        }//end of if
-    //     }//end of for i
     } //end of clearTilesVertical
     clearTilesVertical()
 
     function shiftTilesUp(){
         let allTiles = document.querySelectorAll('.box')
-        for(i=11; i<61; i++)
+        for(i=11; i<60; i++)
+        // debugger
             if(allTiles[i].querySelector('img').src !== "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp" && allTiles[i-10].querySelector('img').src === "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"){
                 // debugger
                 let personImage = allTiles[i].querySelector('img').src
