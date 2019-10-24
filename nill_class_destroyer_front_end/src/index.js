@@ -9,9 +9,8 @@ let ranCannonImage
 function shoot(){
     if (document.getElementById(`${currentCannonPosition - 4}`).innerHTML === `<img src="https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&amp;rid=giphy.webp" class="pictures">`) {
     console.log("EMPTY ABOVE")
+    // debugger
     currentCannonImage = document.getElementById(`${currentCannonPosition}`).innerHTML
-    console.log(currentCannonPosition)
-    console.log(currentCannonImage)
     document.getElementById(`${currentCannonPosition}`).innerHTML = `<img src="https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&amp;rid=giphy.webp" class="pictures">`
     document.getElementById(`${currentCannonPosition - 4}`).innerHTML = currentCannonImage
     currentCannonPosition -= "4"
@@ -23,6 +22,9 @@ function shoot(){
 } else {
     // console.log(currentCannonPosition)
     // console.log(currentCannonImage)
+    currentCannonPosition = 20
+    id = setInterval(slide, 150)
+    slide()
 
 }}
 
@@ -108,36 +110,28 @@ function fillBox(num){
 
 
 
-// INFINITE LOOP
-    // let intervalID = setInterval(e => {
-    //     console.log("YO")    
-    // }, 100);
-    // document.addEventListener("keydown", e => {
-    //     if (e.code === "Space") {
-    //         clearInterval(intervalID)
-    //     };
-    // });
-
-
-//move from 20 to left and right 
 
 fillBox(20)
 
 // 
 ranCannonImage = ranTile[Math.floor(Math.random() * ranTile.length)]
 
-document.addEventListener("keydown", (event) => {
+function listenForSpaceBar(){
+    
+    document.addEventListener("keydown", (event) => {
 
     if (event.code === "Space") {
         shoot()
         clearInterval(id)
         ranCannonImage = ranTile[Math.floor(Math.random() * ranTile.length)]
-        fillBox(20)
         
-
+        fillBox(20)
     }
 
 })
+}
+
+
 
 let id = setInterval(slide, 150)
 let direction = 'left'
@@ -151,7 +145,10 @@ function slide(){
     if (currentCannonPosition == 17){
         direction = 'right'
     }
-
+    if(currentCannonPosition < 17){
+        currentCannonPosition = 20
+        slide()
+    }
     if(direction === 'right'){
         currentCannonPosition++
     } else {
@@ -163,5 +160,4 @@ function slide(){
 }
 
 
-
-
+listenForSpaceBar()
