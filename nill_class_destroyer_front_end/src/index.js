@@ -109,7 +109,7 @@
     function shiftTilesUp(){
         // debugger
         let allTiles = document.querySelectorAll('.box')
-        for(i=11; i<50; i++)
+        for(i=10; i<50; i++)
         // debugger
             if(allTiles[i].querySelector('img').src !== "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp" && allTiles[i-10].querySelector('img').src === "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"){
                 // debugger
@@ -194,6 +194,14 @@
                     clearTilesHorizontal()
                     shiftTilesUp()
                     clearTilesVertical()
+                    clearTilesHorizontal()
+                    shiftTilesUp()
+                    shiftTilesUp()
+                    shiftTilesUp()
+                    shiftTilesUp()
+                    shiftTilesUp()
+                    clearTilesVertical()
+                    clearTilesHorizontal()
                     scoreShow.innerText = ""
                     scoreShow.insertAdjacentHTML('beforeend',`<h2>Score: ${score}</h2>`)
                     slide()
@@ -212,7 +220,7 @@
     let oldTime = 0
         document.addEventListener("keydown", (event) => {
             
-            if ((event.timeStamp - oldTime) > 90 && event.code === "Space") {
+            if ((event.timeStamp - oldTime) > 175 && event.code === "Space") {
                 debugger
                 oldTime = event.timeStamp
             

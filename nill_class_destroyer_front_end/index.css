@@ -1,3 +1,11 @@
+body{
+background-image: url(https://media.giphy.com/media/l9Uj1TPl8wFvAbL6qF/giphy.gif);
+background-size: cover;
+color: white;
+text-align: center;
+}
+
+
 .game-board{ 
     display: grid;
     grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
@@ -6,13 +14,18 @@
    }
 
    .box {
-    background-color: #d9d9d9;
+    background-image: url(https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp);
     border: 2px solid black;
    }
    
    #blue{
     background-color: blue;
    }
+
+   img{
+       border-radius: 4em;
+   }
+
 
 .shooter{
     display: grid;
