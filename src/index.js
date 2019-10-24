@@ -3,6 +3,8 @@
     const gameBoard = document.querySelector('.game-board')
     const shooter = document.querySelector('.shooter')
     const matrixUrl = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
+    const loginArea = document.querySelector('.login')
+    
     let score = 0 
 
     const scoreShow = document.querySelector('.score')
@@ -57,11 +59,6 @@
         console.log(shooterTileArray)
         return shooterTileArray
     }//end of shooter function
-    
-    renderShooterTiles()
-
-    console.log('RENDERING SHOOTER TILES')
-
 
 
     function clearTilesHorizontal(){
@@ -83,9 +80,6 @@
             } // end of i
     } //end of clearTilesHorizontal
 
-    // clearTilesHorizontal()
-
-
     function clearTilesVertical(){
         console.log("clearing vert")
         // debugger
@@ -104,7 +98,6 @@
             }//end of for j
         }//end of for i
     } //end of clearTilesVertical
-    // clearTilesVertical()
 
     function shiftTilesUp(){
         // debugger
@@ -122,8 +115,6 @@
             }
 
     }///end of tile shift up
-
-    // shiftTilesUp()
 
     function boardCleared(){
         let allTiles = document.querySelectorAll('.box')
@@ -252,38 +243,104 @@
     }
      listenForSpaceBar()
 
+//---------- INSERTED EUGENIA'S CODE -----------------//
 
+function loginOrSignUp(){
+    loginArea.insertAdjacentHTML('beforeend', 
+    `<button id="login" type="button">Login</button>
+    <button id="sign-up" type="button">Sign Up</button>
+    `)
+}
 
+function renderSignUpForm(){
+    loginArea.insertAdjacentHTML('beforeend', 
+    `<form id="signUpForm">
+        <h1>Sign Up</h1>
+        <p>Please fill in this form to create an account.</p>
+        <hr>
 
+        <label for="first_name"><b>First Name</b></label>
+        <input type="text" placeholder="First Name" name="first_name" required>
+        <label for="last_name"><b>Last Name</b></label>
+        <input type="text" placeholder="Last Name" name="last_name" required>
+        <br>
+        <br>
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="User Name" name="username" required>
+        <br>
+        <input id="submitSignUp" type="submit" value="Create Account and Login"> 
+    </form>`
+    )
+}
 
+function renderLoginForm(){
+    loginArea.insertAdjacentHTML('beforeend', 
+    ` Login:
+    <form name="login" method="get" accept-charset="utf-8">  
+        <label for="username">Username</label>  
+        <input type="username" name="username" placeholder="username" required>
+        <br>  
+        <input id="submitLogin" type="submit" value="Login">   
+    </form> `
+    )
+}
 
+function login(user){
+    return fetch('http://localhost:3000/api/v1/sessions', {
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json",
+            "Accepts":"application/json"
+        },
+        body: JSON.stringify({
+            user: user
+        })
+    })
+    .then(response => json())
+    .then(console.log(data))
+}
 
-    
-    ////////////////////////////////////////////////////////end of Alexs code
-    gameBoard.addEventListener('click', function(event){
-        console.log(event)
-        // debugger
-        
-    })//end of gameBoard event listener
-
-
-
-
-/* <div class = "game-board">
-<div class="box" data-x=1 data-y="A" id="blue"></div>
-<div class="box" data-x=2 data-y="A"></div>
-<div class="box" data-x=3 data-y="A"></div>
-<div class="box" data-x=1 data-y="B"></div>
-<div class="box" data-x=2 data-y="B"></div>
-<div class="box" data-x=3 data-y="B"></div>
-<div class="box" data-x=1 data-y="C"></div>
-<div class="box" data-x=2 data-y="C"></div>
-<div class="box" data-x=3 data-y="C"></div> 
-</div> */
-
-
-// <div class="shooter">
-// <div class="box" data-x=1 data-y="A"></div>
-// <div class="box" data-x=2 data-y="A"></div>
-// <div class="box" data-x=3 data-y="A"></div>
-// </div>
+document.addEventListener('DOMContentLoaded', function(event){
+    loginOrSignUp()
+    const loginBtn = document.querySelector('#login')
+    const signupBtn = document.querySelector('#sign-up')
+    signupBtn.addEventListener('click', function(event){ 
+        loginArea.innerText = ""   
+        renderSignUpForm()
+        loginArea.addEventListener('submit', function(event){
+            event.preventDefault()
+            array = document.querySelectorAll("input")
+            let firstName = array[0].value
+            let lastName = array[1].value
+            let username = array[2].value
+            fetch('http://localhost:3000/api/v1/users', {
+                method: "POST",
+                headers: {
+                    "Content-Type":"application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    first_name: firstName,
+                    last_name: lastName,
+                    username: username
+                })
+            }).then(resp => resp.json())
+            .then(data => {
+                let username = data.username
+            })
+            login(username)
+            debugger
+            
+        })
+    })    
+    loginBtn.addEventListener('click', function(event){
+        loginArea.innerText = "" 
+        renderLoginForm()
+        loginArea.addEventListener('submit', function(event){
+            event.preventDefault()
+            let user = document.querySelector('input').value 
+            login(user) 
+            renderShooterTiles()
+        }) 
+    })
+})
