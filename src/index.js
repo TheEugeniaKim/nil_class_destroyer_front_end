@@ -1,18 +1,18 @@
-
-
     const gameBoard = document.querySelector('.game-board')
     const shooter = document.querySelector('.shooter')
     const matrixUrl = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
     const loginArea = document.querySelector('.login')
     
     let score = 0 
+    let sessionId;
 
     const scoreShow = document.querySelector('.score')
     scoreShow.insertAdjacentHTML('beforeend',`<h2>Score: ${score}</h2>`)
-    
+
     function renderShooterTiles(){
         let currentNum
         let shooterTileArray = []
+        
         for(i=0; i<60; i++) {
             let randNum = Math.floor(Math.random() * 4) + 1  
             while (randNum === currentNum){
@@ -57,7 +57,9 @@
                 }//end of l for
                 
         console.log(shooterTileArray)
+        renderCanon()
         return shooterTileArray
+        
     }//end of shooter function
 
 
@@ -134,115 +136,114 @@
 
 
     ///adding shooter -- Merging Alex's code **********************************************************
-    let z = document.getElementById('60')
-    let ranTile = ['https://i.imgur.com/tnuhsYy.png', 'https://i.imgur.com/SrvkkhV.png', 'https://i.imgur.com/aSU28qw.png', 'https://i.imgur.com/JyxRnjJ.png']
-    let currentCannonPosition = 60
-    ranCannonImage = ranTile[Math.floor(Math.random() * ranTile.length)]
-    let imgSrc = `<img src="${ranCannonImage}" class="pictures">`
-    z.innerHTML = imgSrc
-
-    function emptyBox(num){
-        document.getElementById(num).innerHTML = `<img src=https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp class="pictures">`
-     }
-     //fill next cannon
-     function fillBox(num){
-        document.getElementById(num).innerHTML = `<img src=${ranCannonImage} class="pictures">`
-     }
-     
-
-
-    
-     
-
-    let id = setInterval(slide, 150)
-    let direction = 'left'
-
-
-    function slide() {
-        emptyBox(currentCannonPosition)
-        if (currentCannonPosition == 60) {
-            direction = 'left'
+function renderCanon(){
+        let z = document.getElementById('60')
+        let ranTile = ['https://i.imgur.com/tnuhsYy.png', 'https://i.imgur.com/SrvkkhV.png', 'https://i.imgur.com/aSU28qw.png', 'https://i.imgur.com/JyxRnjJ.png']
+        let currentCannonPosition = 60
+        ranCannonImage = ranTile[Math.floor(Math.random() * ranTile.length)]
+        let imgSrc = `<img src="${ranCannonImage}" class="pictures">`
+        z.innerHTML = imgSrc
+        
+        function emptyBox(num){
+            document.getElementById(num).innerHTML = `<img src=https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp class="pictures">`
         }
-        if (currentCannonPosition == 51) {
-            direction = 'right'
+        //fill next cannon
+        function fillBox(num){
+            document.getElementById(num).innerHTML = `<img src=${ranCannonImage} class="pictures">`
         }
-        if (currentCannonPosition < 51) {
-            currentCannonPosition = 60
-            slide()
-        }
-        if (direction === 'right') {
-            currentCannonPosition++
-        } else {
-            currentCannonPosition--
-        }
-        fillBox(currentCannonPosition)
-    }
-    
+        
+        let id = setInterval(slide, 150)
+        let direction = 'left'
 
-    function shoot(){
-        // debugger
-        // if (currentCannonPosition>10){
-        if (currentCannonPosition >10 && document.getElementById(`${currentCannonPosition - 10}`).innerHTML === `<img src="https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&amp;rid=giphy.webp" class="pictures">`) {
-                // debugger    
-            currentCannonImage = document.getElementById(`${currentCannonPosition}`).innerHTML
-                document.getElementById(`${currentCannonPosition}`).innerHTML = `<img src="https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&amp;rid=giphy.webp" class="pictures">`
-                document.getElementById(`${currentCannonPosition - 10}`).innerHTML = currentCannonImage
-                
-                currentCannonPosition -= "10"
-                currentCannonImage = document.getElementById(`${currentCannonPosition}`).innerHTML
-                setTimeout(function(){ shoot()}, 100);
-
-            
+        function slide() {
+            emptyBox(currentCannonPosition)
+            if (currentCannonPosition == 60) {
+                direction = 'left'
+            }
+            if (currentCannonPosition == 51) {
+                direction = 'right'
+            }
+            if (currentCannonPosition < 51) {
+                currentCannonPosition = 60
+                slide()
+            }
+            if (direction === 'right') {
+                currentCannonPosition++
             } else {
-                if(currentCannonPosition<51){
-                    currentCannonPosition = 60
-                    id = setInterval(slide, 150)
-                    clearTilesVertical()
-                    clearTilesHorizontal()
-                    shiftTilesUp()
-                    clearTilesVertical()
-                    clearTilesHorizontal()
-                    shiftTilesUp()
-                    shiftTilesUp()
-                    shiftTilesUp()
-                    shiftTilesUp()
-                    shiftTilesUp()
-                    clearTilesVertical()
-                    clearTilesHorizontal()
-                    scoreShow.innerText = ""
-                    scoreShow.insertAdjacentHTML('beforeend',`<h2>Score: ${score}</h2>`)
-                    slide()
-                }else{
-                    gameBoard.innerHTML = "YOU LOST. You're fired. " 
-                }
-
-                    // clearTilesVertical()
-                    // clearTilesHorizontal()
-                    // shiftTilesUp()
-            }//end of first if
-        // }//END OF LAST IF
-    }//end of shoot function
-    
-    function listenForSpaceBar(){
-    let oldTime = 0
-        document.addEventListener("keydown", (event) => {
-            
-            if ((event.timeStamp - oldTime) > 175 && event.code === "Space") {
-                // debugger
-                oldTime = event.timeStamp
-            
-            shoot()
-            clearInterval(id)
-            ranCannonImage = ranTile[Math.floor(Math.random() * ranTile.length)]
-            
-            fillBox(60)
-            
+                currentCannonPosition--
+            }
+            fillBox(currentCannonPosition)
         }
     
-    })
-    }
-     listenForSpaceBar()
+        
+        function shoot(){
+            // debugger
+            // if (currentCannonPosition>10){
+            if (currentCannonPosition >10 && document.getElementById(`${currentCannonPosition - 10}`).innerHTML === `<img src="https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&amp;rid=giphy.webp" class="pictures">`) {
+                    // debugger    
+                currentCannonImage = document.getElementById(`${currentCannonPosition}`).innerHTML
+                    document.getElementById(`${currentCannonPosition}`).innerHTML = `<img src="https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&amp;rid=giphy.webp" class="pictures">`
+                    document.getElementById(`${currentCannonPosition - 10}`).innerHTML = currentCannonImage
+                    
+                    currentCannonPosition -= "10"
+                    currentCannonImage = document.getElementById(`${currentCannonPosition}`).innerHTML
+                    setTimeout(function(){ shoot()}, 100);
 
+                
+                } else {
+                    if(currentCannonPosition<51){
+                        currentCannonPosition = 60
+                        id = setInterval(slide, 150)
+                        clearTilesVertical()
+                        clearTilesHorizontal()
+                        shiftTilesUp()
+                        clearTilesVertical()
+                        clearTilesHorizontal()
+                        shiftTilesUp()
+                        shiftTilesUp()
+                        shiftTilesUp()
+                        shiftTilesUp()
+                        shiftTilesUp()
+                        clearTilesVertical()
+                        clearTilesHorizontal()
+                        scoreShow.innerText = ""
+                        scoreShow.insertAdjacentHTML('beforeend',`<h2>Score: ${score}</h2>`)
+                        slide()
+                    }else{
+                        gameBoard.innerHTML = "YOU LOST. You're fired. " 
+                    }
+
+                        // clearTilesVertical()
+                        // clearTilesHorizontal()
+                        // shiftTilesUp()
+                }//end of first if
+            // }//END OF LAST IF
+        }//end of shoot function
+        
+
+        function listenForSpaceBar(){
+        let oldTime = 0
+            document.addEventListener("keydown", (event) => {
+                
+                if ((event.timeStamp - oldTime) > 175 && event.code === "Space") {
+                    // debugger
+                    oldTime = event.timeStamp
+                // debugger
+                shoot()
+                // debugger
+                clearInterval(id)
+                ranCannonImage = ranTile[Math.floor(Math.random() * ranTile.length)]
+                
+                fillBox(60)
+                
+            }
+        })
+        }
+            slide()
+            // shoot()
+            listenForSpaceBar()
+
+}
 //---------- INSERTED EUGENIA'S CODE -----------------//
 
 function loginOrSignUp(){
@@ -286,7 +287,12 @@ function renderLoginForm(){
 }
 
 function login(user){
-    return fetch('http://localhost:3000/api/v1/sessions', {
+    return fetch('http://localhost:3000/api/v1/users')
+    .then(response => response.json())
+    .then(data => {
+        let found = data.find(data => data.username === `${user}`)
+        if (found){
+        fetch('http://localhost:3000/api/v1/sessions', {
         method: "POST",
         headers: {
             "Content-Type":"application/json",
@@ -295,10 +301,39 @@ function login(user){
         body: JSON.stringify({
             user: user
         })
+        })
+        .then(response => response.json())
+        .then(data => { 
+            sessionId = data.id 
+            renderShooterTiles()
+        })
+    }
+    else {
+        alert('Login Failed Please Try Again')
+    }
     })
-    .then(response => json())
-    .then(console.log(data))
 }
+
+function createUser(firstName, lastName, username){
+    fetch('http://localhost:3000/api/v1/users', {
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            first_name: firstName,
+            last_name: lastName,
+            username: username
+        })
+    }).then(resp => resp.json())
+    .then(data => {
+        
+        let username = data.username
+    })
+}
+
+
 
 document.addEventListener('DOMContentLoaded', function(event){
     loginOrSignUp()
@@ -313,24 +348,10 @@ document.addEventListener('DOMContentLoaded', function(event){
             let firstName = array[0].value
             let lastName = array[1].value
             let username = array[2].value
-            fetch('http://localhost:3000/api/v1/users', {
-                method: "POST",
-                headers: {
-                    "Content-Type":"application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    first_name: firstName,
-                    last_name: lastName,
-                    username: username
-                })
-            }).then(resp => resp.json())
-            .then(data => {
-                let username = data.username
-            })
-            login(username)
-            debugger
+            createUser(firstName, lastName, username)
+            login(username) 
             
+
         })
     })    
     loginBtn.addEventListener('click', function(event){
@@ -340,7 +361,8 @@ document.addEventListener('DOMContentLoaded', function(event){
             event.preventDefault()
             let user = document.querySelector('input').value 
             login(user) 
-            renderShooterTiles()
+            // renderShooterTiles()
+            // renderCanon()
         }) 
     })
 })
