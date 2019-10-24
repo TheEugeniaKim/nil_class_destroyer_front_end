@@ -1,11 +1,9 @@
 class simonTile{
-    constructor(image_url){
-    this.image_url = 'nill_class_destroyer_front_end/bubble_images/simon_bubble.png'
+    constructor(){
+    this.image_url = 'https://i.imgur.com/aSU28qw.png'
     }
         
-    static createSimonTile() {
-        return simonTile.new 
-    }//end of for
+   
     
 
 }

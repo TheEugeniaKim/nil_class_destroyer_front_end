@@ -1,11 +1,15 @@
 class charlieTile{
-    constructor(image_url){
-    this.image_url = 'nill_class_destroyer_front_end/bubble_images/charlie_bubble.png'
+    constructor(){
+        this.image_url = 'https://i.imgur.com/tnuhsYy.png'
     }
         
-    static createCharlieTile() {
-        return charlieTile.new 
-    }//end of for
-    
+    // static createCharlieTile() {
+    //     return charlieTile.new 
+    // }//end of for
 
 }
+
+// let charlie1 = new charlieTile
+
+// const shooter = document.querySelector('.shooter')
+// shooter.insertAdjacentHTML('beforeend', '<img src=`charlie1.image_url`>)
