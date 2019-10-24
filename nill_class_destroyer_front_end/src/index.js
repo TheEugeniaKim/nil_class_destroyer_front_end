@@ -2,7 +2,7 @@
 
     const gameBoard = document.querySelector('.game-board')
     const shooter = document.querySelector('.shooter')
-
+    const matrixUrl = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
     let score = 0 
 
     const scoreShow = document.querySelector('.score')
@@ -51,7 +51,7 @@
                 }//end of k for
                 
                 for(l=20; l<60; l++){
-                    gameBoard.insertAdjacentHTML('beforeend', `<div id=${l+1} class="box"><img src="https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp" class ="pictures">`)
+                    gameBoard.insertAdjacentHTML('beforeend', `<div id=${l+1} class="box"><img src=${matrixUrl} class ="pictures">`)
                 }//end of l for
                 
         console.log(shooterTileArray)
@@ -71,11 +71,11 @@
             for(let i=1; i < 9; i++){
                 for( j=i ;j<50; j+=10){
                     // debugger
-                    if(allTiles[j].querySelector('img').src === allTiles[j-1].querySelector('img').src && allTiles[j].querySelector('img').src === allTiles[j+1].querySelector('img').src && allTiles[j].querySelector('img').src !== "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"){
+                    if(allTiles[j].querySelector('img').src === allTiles[j-1].querySelector('img').src && allTiles[j].querySelector('img').src === allTiles[j+1].querySelector('img').src && allTiles[j].querySelector('img').src !== matrixUrl){
                         console.log('it works')
-                        allTiles[j-1].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
-                        allTiles[j].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
-                        allTiles[j+1].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
+                        allTiles[j-1].querySelector('img').src = matrixUrl
+                        allTiles[j].querySelector('img').src = matrixUrl
+                        allTiles[j+1].querySelector('img').src = matrixUrl
                         score += 3
                         // debugger
                     }//end of if
@@ -93,11 +93,11 @@
         for(i=10; i<50; i+=10){
             for(j=i;j<(i+10); j++){
                 // debugger
-                if(allTiles[j].querySelector('img').src === allTiles[j-10].querySelector('img').src && allTiles[j].querySelector('img').src === allTiles[j+10].querySelector('img').src && allTiles[j].querySelector('img').src !== "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"){
+                if(allTiles[j].querySelector('img').src === allTiles[j-10].querySelector('img').src && allTiles[j].querySelector('img').src === allTiles[j+10].querySelector('img').src && allTiles[j].querySelector('img').src !== matrixUrl){
                         console.log('it works')
-                        allTiles[j-10].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
-                        allTiles[j].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
-                        allTiles[j+10].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
+                        allTiles[j-10].querySelector('img').src = matrixUrl
+                        allTiles[j].querySelector('img').src = matrixUrl
+                        allTiles[j+10].querySelector('img').src = matrixUrl
                         score += 3
                         // debugger
                 }//end of if
@@ -111,19 +111,35 @@
         let allTiles = document.querySelectorAll('.box')
         for(i=10; i<50; i++)
         // debugger
-            if(allTiles[i].querySelector('img').src !== "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp" && allTiles[i-10].querySelector('img').src === "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"){
+            if(allTiles[i].querySelector('img').src !== matrixUrl && allTiles[i-10].querySelector('img').src === matrixUrl){
                 // debugger
                 let personImage = allTiles[i].querySelector('img').src
                 // debugger
                 allTiles[i-10].querySelector('img').src = personImage
                 // debugger
-                allTiles[i].querySelector('img').src = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
+                allTiles[i].querySelector('img').src = matrixUrl
                 // debugger
             }
 
     }///end of tile shift up
 
     // shiftTilesUp()
+
+    function boardCleared(){
+        let allTiles = document.querySelectorAll('.box')
+        let imgMatrix = true
+        for(i=0; i<10;i++){
+            if(allTiles[i].querySelector('img').src === matrixUrl && imgMatrix){
+
+            } else {
+                imgMatrix = false
+                return imgMatrix
+            }//end of first if
+            if(i === 9 && imgMatrix){
+                console.log('thats nice')
+            }//end of second if
+        }//end of for loop
+    }//end of boardCleared
 
 
     ///adding shooter -- Merging Alex's code **********************************************************
@@ -221,7 +237,7 @@
         document.addEventListener("keydown", (event) => {
             
             if ((event.timeStamp - oldTime) > 175 && event.code === "Space") {
-                debugger
+                // debugger
                 oldTime = event.timeStamp
             
             shoot()
@@ -235,6 +251,7 @@
     })
     }
      listenForSpaceBar()
+
 
 
 
