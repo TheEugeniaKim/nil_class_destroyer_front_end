@@ -1,7 +1,8 @@
-    const gameBoard = document.querySelector('.game-board')
-    const shooter = document.querySelector('.shooter')
-    const matrixUrl = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
-    const loginArea = document.querySelector('.login')
+    let gameBoard = document.querySelector('.game-board')
+    let shooter = document.querySelector('.shooter')
+    let matrixUrl = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
+    let loginArea = document.querySelector('.login')
+    let currentCannonPosition
     
     let score = 0 
     let sessionId;
@@ -12,6 +13,10 @@
     function renderShooterTiles(){
         let currentNum
         let shooterTileArray = []
+        gameBoard = document.querySelector('.game-board')
+        shooter = document.querySelector('.shooter')
+        matrixUrl = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
+        loginArea = document.querySelector('.login')
         
         for(i=0; i<60; i++) {
             let randNum = Math.floor(Math.random() * 4) + 1  
@@ -83,7 +88,7 @@
     } //end of clearTilesHorizontal
 
     function clearTilesVertical(){
-        console.log("clearing vert")
+        // console.log("clearing vert")
         // debugger
         let allTiles = document.querySelectorAll('.box')
         for(i=10; i<50; i+=10){
@@ -138,38 +143,53 @@
     ///adding shooter -- Merging Alex's code **********************************************************
 function renderCanon(){
         let z = document.getElementById('60')
+        // debugger
         let ranTile = ['https://i.imgur.com/tnuhsYy.png', 'https://i.imgur.com/SrvkkhV.png', 'https://i.imgur.com/aSU28qw.png', 'https://i.imgur.com/JyxRnjJ.png']
-        let currentCannonPosition = 60
+        currentCannonPosition = 60
         ranCannonImage = ranTile[Math.floor(Math.random() * ranTile.length)]
         let imgSrc = `<img src="${ranCannonImage}" class="pictures">`
         z.innerHTML = imgSrc
-        
+        // debugger
         function emptyBox(num){
+            // debugger
+            console.log('we are in empty box', num)
             document.getElementById(num).innerHTML = `<img src=https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp class="pictures">`
+            // console.log(z)
+            // debugger
         }
         //fill next cannon
         function fillBox(num){
+            console.log('we are in fill box', num)
             document.getElementById(num).innerHTML = `<img src=${ranCannonImage} class="pictures">`
+            // debugger
         }
         
         let id = setInterval(slide, 150)
+
+
+
         let direction = 'left'
 
         function slide() {
             emptyBox(currentCannonPosition)
             if (currentCannonPosition == 60) {
+                // console.log('if cannon pos is equal to 60', currentCannonPosition)
                 direction = 'left'
             }
             if (currentCannonPosition == 51) {
+                // console.log('if cannon pos is 51', currentCannonPosition)
                 direction = 'right'
             }
             if (currentCannonPosition < 51) {
+                // console.log('if cannon pos is less than 51', currentCannonPosition)
                 currentCannonPosition = 60
-                slide()
+                // slide()
             }
             if (direction === 'right') {
+                // console.log('if direction is right', direction)
                 currentCannonPosition++
             } else {
+                // console.log('if direction is left', direction)
                 currentCannonPosition--
             }
             fillBox(currentCannonPosition)
@@ -189,10 +209,12 @@ function renderCanon(){
                     currentCannonImage = document.getElementById(`${currentCannonPosition}`).innerHTML
                     setTimeout(function(){ shoot()}, 100);
 
-                
+                    
                 } else {
                     if(currentCannonPosition<51){
+                        // console.log("fired bubble pos is less than 51?:", currentCannonPosition)
                         currentCannonPosition = 60
+                        // clearInterval(id)
                         id = setInterval(slide, 150)
                         clearTilesVertical()
                         clearTilesHorizontal()
@@ -210,7 +232,48 @@ function renderCanon(){
                         scoreShow.insertAdjacentHTML('beforeend',`<h2>Score: ${score}</h2>`)
                         slide()
                     }else{
-                        gameBoard.innerHTML = "YOU LOST. You're fired. " 
+                        gameBoard = document.querySelector('.game-board')
+                        shooter = document.querySelector('.shooter')
+                        matrixUrl = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
+                        loginArea = document.querySelector('.login')
+                        console.log('the game is over')
+                        loginArea.innerHTML = "YOU LOST. You're fired. " 
+                        gameBoard.innerHTML = ''
+                        // document.removeEventListener("keydown", spaceListener)
+                        // ideally here is where you want to patch
+                        // update the score 
+                        // and then we want the user to click a 'play again' button
+                        // this should refresh the page
+
+                        document.querySelector('body').innerHTML = (`
+                            <h1>WELCOME TO NIL CLASS DESTROYER</h1>
+                            <div class = "login"></div>
+                            <div class="score"></div>
+                            <div class = "game-board">
+                        
+                            </div>
+                        `)
+
+                     
+
+                        // debugger
+                        loginOrSignUp()
+
+
+
+                        // clearInterval(id)
+                        // fetch(`http://localhost:3000/api/v1/sessions/${sessionId}`, {
+                        //     method: "PATCH",
+                        //     headers: {
+                        //         "Content-Type": 'application/json',
+                        //         "Accepts": 'application/json'
+                        //     },
+                        //     body: JSON.stringify({
+                        //         score: score 
+                        //     })
+                        // })
+                        
+
                     }
 
                         // clearTilesVertical()
@@ -219,38 +282,50 @@ function renderCanon(){
                 }//end of first if
             // }//END OF LAST IF
         }//end of shoot function
-        
 
+        console.log(shoot)
+        // const spaceListener = createListener(0, shoot, id, ranTile, fillBox, emptyBox)
+
+        slide()
+        
         function listenForSpaceBar(){
-        let oldTime = 0
+            let oldTime = 0
+            // console.log("attaching", document.querySelector(".game-board"))
             document.addEventListener("keydown", (event) => {
-                
+                console.log("SPACE")
                 if ((event.timeStamp - oldTime) > 175 && event.code === "Space") {
                     // debugger
-                    oldTime = event.timeStamp
-                // debugger
-                shoot()
-                // debugger
-                clearInterval(id)
-                ranCannonImage = ranTile[Math.floor(Math.random() * ranTile.length)]
-                
-                fillBox(60)
-                
-            }
-        })
-        }
-            slide()
+                    // console.log("id", id)
+                        oldTime = event.timeStamp
+                        // debugger
+                        shoot()
+                        // debugger
+                        clearInterval(id)
+                        ranCannonImage = ranTile[Math.floor(Math.random() * ranTile.length)]            
+                        fillBox(60)     
+                    }//end of if
+                })//end of event listener
+            }//listen for spacebar function
             // shoot()
+            
+            //---------- INSERTED EUGENIA'S CODE -----------------//
             listenForSpaceBar()
+}//render cannon function
 
-}
-//---------- INSERTED EUGENIA'S CODE -----------------//
+// function createListener(oldTime,shoot, id, ranTile, fillBox, emptyBox){
+//     console.log("CREATING")
+//     return 
+// }
 
+        
 function loginOrSignUp(){
+    console.log('are we here')
+    loginArea = document.querySelector('.login')
     loginArea.insertAdjacentHTML('beforeend', 
     `<button id="login" type="button">Login</button>
     <button id="sign-up" type="button">Sign Up</button>
     `)
+    addEventListenerToButtons()
 }
 
 function renderSignUpForm(){
@@ -305,8 +380,9 @@ function login(user){
         .then(response => response.json())
         .then(data => { 
             sessionId = data.id 
-            renderShooterTiles()
         })
+        renderShooterTiles()
+        loginArea.innerText = ""
     }
     else {
         alert('Login Failed Please Try Again')
@@ -335,8 +411,11 @@ function createUser(firstName, lastName, username){
 
 
 
-document.addEventListener('DOMContentLoaded', function(event){
+// document.addEventListener('DOMContentLoaded', function(event){
     loginOrSignUp()
+
+    function addEventListenerToButtons() {
+
     const loginBtn = document.querySelector('#login')
     const signupBtn = document.querySelector('#sign-up')
     signupBtn.addEventListener('click', function(event){ 
@@ -349,20 +428,26 @@ document.addEventListener('DOMContentLoaded', function(event){
             let lastName = array[1].value
             let username = array[2].value
             createUser(firstName, lastName, username)
+            console.log('sign up login')
             login(username) 
             
-
+            loginArea.innerText = ""
         })
     })    
     loginBtn.addEventListener('click', function(event){
         loginArea.innerText = "" 
         renderLoginForm()
         loginArea.addEventListener('submit', function(event){
+            console.log(event)
             event.preventDefault()
             let user = document.querySelector('input').value 
+            console.log('loging login')
+            
             login(user) 
             // renderShooterTiles()
             // renderCanon()
+            loginArea.innerText = ""
         }) 
     })
-})
+}
+    // })
