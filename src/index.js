@@ -419,14 +419,13 @@ function login(user){
         // loginArea.innerText = `score = ${score}`
     }
     else {
-        
         alert('Login Failed Please Try Again')
     }
     })
 }
 
 function createUser(firstName, lastName, username){
-    fetch('http://localhost:3000/api/v1/users', {
+    return fetch('http://localhost:3000/api/v1/users', {
         method: "POST",
         headers: {
             "Content-Type":"application/json",
@@ -474,10 +473,9 @@ function updateSession(){
             let lastName = array[1].value
             let username = array[2].value
             createUser(firstName, lastName, username)
-            console.log('sign up login')
-            login(username) 
-            
-            loginArea.innerText = ""
+            .then(() => {
+                login(username)
+                loginArea.innerText = ""})
         })
     })    
     loginBtn.addEventListener('click', function(event){
