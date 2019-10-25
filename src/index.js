@@ -236,28 +236,36 @@ function renderCanon(){
                         shooter = document.querySelector('.shooter')
                         matrixUrl = "https://media2.giphy.com/media/sULKEgDMX8LcI/giphy.webp?cid=790b76110dac576cf6e7cca7a3097cf9ba5cd5dcd4d2e185&rid=giphy.webp"
                         loginArea = document.querySelector('.login')
+                        
                         console.log('the game is over')
+                        gameBoard.innerText = ""
                         loginArea.innerHTML = "YOU LOST. You're fired. " 
-                        gameBoard.innerHTML = ''
+                        updateSession()
+                        getHighScore()
+
+                        
+                        
+                        // gameBoard.innerHTML = `Score: ${score}`
+
                         // document.removeEventListener("keydown", spaceListener)
                         // ideally here is where you want to patch
                         // update the score 
                         // and then we want the user to click a 'play again' button
                         // this should refresh the page
 
-                        document.querySelector('body').innerHTML = (`
-                            <h1>WELCOME TO NIL CLASS DESTROYER</h1>
-                            <div class = "login"></div>
-                            <div class="score"></div>
-                            <div class = "game-board">
+                        // document.querySelector('body').innerHTML = (`
+                        //     <h1>WELCOME TO NIL CLASS DESTROYER</h1>
+                        //     <div class = "login"></div>
+                        //     <div class="score"></div>
+                        //     <div class = "game-board">
                         
-                            </div>
-                        `)
+                        //     </div>
+                        // `)
 
                      
 
                         // debugger
-                        loginOrSignUp()
+                        // loginOrSignUp()
 
 
 
@@ -317,7 +325,33 @@ function renderCanon(){
 //     return 
 // }
 
-        
+
+function getHighScore(){
+    return fetch('http://localhost:3000/api/v1/sessions')
+    .then(response => response.json())
+    .then(function(data){ 
+        let promiseData = data
+        let sortedScores = promiseData.sort(function(a, b) {
+            return +a.score - +b.score
+        })
+        let topScores = sortedScores.slice(-5)
+        let arrayNum = [5,4,3,2,1]
+        for (i = 0; i < 5; i++){  
+                // debugger      
+                loginArea.insertAdjacentHTML("afterend", `
+                
+                <br>${arrayNum[i]}. ${topScores[i].score}
+                
+            `)}///end of for
+        loginArea.insertAdjacentHTML("afterend", `
+            <h3>Leaderboard Top Scores: </h3>
+        `)
+            
+        })
+    console.log(topScores)
+    console.log(promiseData)
+}
+    
 function loginOrSignUp(){
     console.log('are we here')
     loginArea = document.querySelector('.login')
@@ -382,9 +416,10 @@ function login(user){
             sessionId = data.id 
         })
         renderShooterTiles()
-        loginArea.innerText = ""
+        // loginArea.innerText = `score = ${score}`
     }
     else {
+        
         alert('Login Failed Please Try Again')
     }
     })
@@ -409,7 +444,18 @@ function createUser(firstName, lastName, username){
     })
 }
 
-
+function updateSession(){
+    return fetch(`http://localhost:3000/api/v1/sessions/${sessionId}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            score: score 
+        })
+    })
+}
 
 // document.addEventListener('DOMContentLoaded', function(event){
     loginOrSignUp()
